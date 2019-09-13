@@ -45,19 +45,20 @@ as.numeric(pull(HW1_1_df, HW1_1_factor))
 
 The logical vector returned as numbers corresponding to TRUE or FALSE. The character vector was unable to return numeric values and instead returned NA. The factor vector returned numeric values although they corresponded to the levels rather than the vector itself.
 
-# Problem 1_1
-
 **Creating a new code chunk to manipulate variables from the dataframe**
 
 ```{r df_1_convert, collapse = TRUE}
-HW1_1_samp_num = as.numeric(pull(HW1_1_df, HW1_1_samp_pos))
-HW1_1_samp_num * pull(HW1_1_df,HW1_1_samp)
+HW1_1_rsamp = pull(HW1_1_df,HW1_1_samp)
+HW1_1_rsamp_pos = pull(HW1_1_df,HW1_1_samp_pos)
 
-HW1_1_samp_factor = as.factor(pull(HW1_1_df,HW1_1_samp_pos))
-HW1_1_samp_factor * pull(HW1_1_df,HW1_1_samp)
+HW1_1_samp_num = as.numeric(HW1_1_rsamp_pos)
+HW1_1_samp_num * HW1_1_rsamp
+
+HW1_1_samp_factor = as.factor(HW1_1_rsamp_pos)
+HW1_1_samp_factor * HW1_1_rsamp
 
 HW1_1_samp_num2 = as.numeric(HW1_1_samp_factor)
-HW1_1_samp_num2 * pull(HW1_1_df,HW1_1_samp)
+HW1_1_samp_num2 * HW1_1_rsamp
 ```
 
 # Problem 2
