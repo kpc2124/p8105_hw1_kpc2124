@@ -12,53 +12,85 @@ output: github_document
 ```{r df_1, message = FALSE}
 library(tidyverse)
 
-HW1_df = tibble(
-  HW1_samp = rnorm(8),
-  HW1_samp_pos = HW1_samp > 0,
-  HW1_char = c("This","is","my","first","home","work","assignment","yay"),
-  HW1_factor = factor(c("Kittens","are","cute","Kittens","are","cute","are","cute")),
+HW1_1_df = tibble(
+  HW1_1_samp = rnorm(8),
+  HW1_1_samp_pos = HW1_1_samp > 0,
+  HW1_1_char = c("This","is","my","first","home","work","assignment","yay"),
+  HW1_1_factor = factor(c("Kittens","are","cute","Kittens","are","cute","are","cute")),
 )
 ```
 
 **Then trying to take the mean of each variable.**
 
 ```{r df_1_means, collapse = TRUE}
-mean(pull(HW1_df, HW1_samp))
-mean(pull(HW1_df, HW1_samp_pos))
-mean(pull(HW1_df, HW1_char))
-mean(pull(HW1_df, HW1_factor))
+mean(pull(HW1_1_df, HW1_1_samp))
+mean(pull(HW1_1_df, HW1_1_samp_pos))
+mean(pull(HW1_1_df, HW1_1_char))
+mean(pull(HW1_1_df, HW1_1_factor))
 ```
 
 **What worked and what didn’t?**
 
-_I was not able to take the mean of the last 2 variables because they were not numeric or logical vectors._ 
+I was not able to take the mean of the last 2 variables because they were not numeric or logical vectors. 
 
 **Applying the as.numeric function to the logical, character, and factor variables**
 
 ```{r df_1_numeric, eval = FALSE}
-as.numeric(pull(HW1_df, HW1_samp_pos))
-as.numeric(pull(HW1_df, HW1_char))
-as.numeric(pull(HW1_df, HW1_factor))
+as.numeric(pull(HW1_1_df, HW1_1_samp_pos))
+as.numeric(pull(HW1_1_df, HW1_1_char))
+as.numeric(pull(HW1_1_df, HW1_1_factor))
 ```
 
 **What happens, and why?**
 
-_The logical vector returned as numbers corresponding to TRUE or FALSE. The character vector was unable to return numeric values and instead returned NA. The factor vector returned numeric values although they corresponded to the levels rather than the vector itself._ 
+The logical vector returned as numbers corresponding to TRUE or FALSE. The character vector was unable to return numeric values and instead returned NA. The factor vector returned numeric values although they corresponded to the levels rather than the vector itself.
 
-# Problem 1.1
+# Problem 1_1
 
-**Creating a new code chunk to manipulate variables from the dataframe:**
+**Creating a new code chunk to manipulate variables from the dataframe.**
 
 ```{r df_1_convert, collapse = TRUE}
-HW1_samp_num = as.numeric(pull(HW1_df, HW1_samp_pos))
-HW1_samp_num * pull(HW1_df,HW1_samp)
+HW1_1_samp_num = as.numeric(pull(HW1_1_df, HW1_1_samp_pos))
+HW1_1_samp_num * pull(HW1_1_df,HW1_1_samp)
 
-HW1_samp_factor = as.factor(pull(HW1_df,HW1_samp_pos))
-HW1_samp_factor * pull(HW1_df,HW1_samp)
+HW1_1_samp_factor = as.factor(pull(HW1_1_df,HW1_1_samp_pos))
+HW1_1_samp_factor * pull(HW1_1_df,HW1_1_samp)
 
-HW1_samp_num2 = as.numeric(HW1_samp_factor)
-HW1_samp_num2 * pull(HW1_df,HW1_samp)
+HW1_1_samp_num2 = as.numeric(HW1_1_samp_factor)
+HW1_1_samp_num2 * pull(HW1_1_df,HW1_1_samp)
 ```
 
 # Problem 2
 
+**Creating a new dataframe**
+
+```{r df_2, message = FALSE}
+HW1_2_df = tibble(
+  x = rnorm(500),
+  y = rnorm(500),
+  HW1_2_logical = x + y > 1,
+  HW1_2_numeric = as.numeric(HW1_2_logical),
+  HW1_2_factor = as.factor(HW1_2_logical)
+)
+```
+
+The size of the data set `HW1_2_df` is `r nrow(HW1_2_df) * ncol(HW1_2_df)`. The mean of `x` is `r mean(pull(HW1_2_df, x))`. The median of `x` is `r median(pull(HW1_2_df, x))`. The standard deviation of `x` is `r sd(pull(HW1_2_df,x))`. The proportion of cases for which `x + y > 1` is `r mean (pull(HW1_2_df,HW1_2_logical))`.
+
+```{r df_2_plot1}
+ggplot(HW1_2_df, aes(x = x, y = y, color = HW1_2_logical)) + geom_point()
+```
+
+```{r df_2_plot2}
+ggplot(HW1_2_df, aes(x = x, y = y, color = HW1_2_numeric)) + geom_point()
+```
+
+```{r df_2_plot3}
+ggplot(HW1_2_df, aes(x = x, y = y, color = HW1_2_factor)) + geom_point()
+```
+
+The color scales for the logical and factor variables are binary TRUE/FALSE scales. For the numeric variable, the color scale is a continuous scale from 0.00 to 1.00.
+
+```{r df_2_export}
+ggsave(filename = "HW_1.2_Plot", plot = first_plot()
+)
+```
