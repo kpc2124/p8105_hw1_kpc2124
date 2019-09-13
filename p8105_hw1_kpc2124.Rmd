@@ -7,7 +7,7 @@ output: github_document
 
 # Problem 1
 
-**Creating a data frame**
+**Creating a dataframe**
 
 ```{r df_1, message = FALSE}
 library(tidyverse)
@@ -20,7 +20,7 @@ HW1_1_df = tibble(
 )
 ```
 
-**Then trying to take the mean of each variable.**
+**Trying to take the mean of each variable**
 
 ```{r df_1_means, collapse = TRUE}
 mean(pull(HW1_1_df, HW1_1_samp))
@@ -41,13 +41,13 @@ as.numeric(pull(HW1_1_df, HW1_1_char))
 as.numeric(pull(HW1_1_df, HW1_1_factor))
 ```
 
-**What happens, and why?**
+**What happened, and why?**
 
 The logical vector returned as numbers corresponding to TRUE or FALSE. The character vector was unable to return numeric values and instead returned NA. The factor vector returned numeric values although they corresponded to the levels rather than the vector itself.
 
 # Problem 1_1
 
-**Creating a new code chunk to manipulate variables from the dataframe.**
+**Creating a new code chunk to manipulate variables from the dataframe**
 
 ```{r df_1_convert, collapse = TRUE}
 HW1_1_samp_num = as.numeric(pull(HW1_1_df, HW1_1_samp_pos))
@@ -76,21 +76,25 @@ HW1_2_df = tibble(
 
 The size of the data set `HW1_2_df` is `r nrow(HW1_2_df) * ncol(HW1_2_df)`. The mean of `x` is `r mean(pull(HW1_2_df, x))`. The median of `x` is `r median(pull(HW1_2_df, x))`. The standard deviation of `x` is `r sd(pull(HW1_2_df,x))`. The proportion of cases for which `x + y > 1` is `r mean (pull(HW1_2_df,HW1_2_logical))`.
 
-```{r df_2_plot1}
-ggplot(HW1_2_df, aes(x = x, y = y, color = HW1_2_logical)) + geom_point()
+**Scatterplots**
+
+```{r df_2_plot1, echo = FALSE}
+plot_logical = ggplot(HW1_2_df, aes(x = x, y = y, color = HW1_2_logical)) + geom_point()
+plot_logical
 ```
 
-```{r df_2_plot2}
-ggplot(HW1_2_df, aes(x = x, y = y, color = HW1_2_numeric)) + geom_point()
+```{r df_2_plot2, echo = FALSE}
+plot_numeric = ggplot(HW1_2_df, aes(x = x, y = y, color = HW1_2_numeric)) + geom_point()
+plot_numeric
 ```
 
-```{r df_2_plot3}
-ggplot(HW1_2_df, aes(x = x, y = y, color = HW1_2_factor)) + geom_point()
+```{r df_2_plot3, echo = FALSE}
+plot_factor = ggplot(HW1_2_df, aes(x = x, y = y, color = HW1_2_factor)) + geom_point()
+plot_factor
 ```
 
 The color scales for the logical and factor variables are binary TRUE/FALSE scales. For the numeric variable, the color scale is a continuous scale from 0.00 to 1.00.
 
-```{r df_2_export}
-ggsave(filename = "HW_1.2_Plot", plot = first_plot()
-)
+```{r df_2_plot1_export, message = FALSE}
+ggsave("Plot_1.png", plot = plot_logical)
 ```
